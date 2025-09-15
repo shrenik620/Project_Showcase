@@ -41,6 +41,26 @@
         >
           My Project Portfolio
         </h1>
+
+        <!-- Hamburger button (Mobile only) -->
+        <button
+          id="menuToggle"
+          class="md:hidden text-gray-700 focus:outline-none"
+        >
+          <svg
+            class="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
       </div>
     </header>
 
@@ -48,7 +68,8 @@
     <div class="flex flex-col md:flex-row h-[calc(100vh-80px)]">
       <!-- LEFT SIDEBAR -->
       <aside
-        class="w-full md:w-1/3 lg:w-1/4 bg-white/50 backdrop-blur-lg border-r border-gray-200 overflow-y-auto"
+        id="sidebar"
+        class="w-full md:w-1/3 lg:w-1/4 bg-white/50 backdrop-blur-lg border-r border-gray-200 overflow-y-auto transform transition-transform duration-300 md:translate-x-0 -translate-x-full fixed md:static inset-y-0 left-0 z-20"
       >
         <div class="p-6">
           <h2 class="text-xl font-semibold mb-6 text-blue-500 tracking-wide">
@@ -59,7 +80,7 @@
       </aside>
 
       <!-- RIGHT CONTENT -->
-      <main class="flex-1 overflow-y-auto p-8">
+      <main class="flex-1 overflow-y-auto p-8 md:ml-0 ml-0">
         <div id="welcome" class="text-center">
           <svg
             class="w-28 h-28 mx-auto mb-6 text-blue-400 opacity-60"
@@ -116,7 +137,7 @@
           description:
             "A currency converter app that allows users to convert amounts between different currencies using real-time exchange rates.",
           technologies: ["React", "TailwindCSS"],
-          link: "https://shrenik620.github.io/Currency_Converter/",
+          link: "https://currency-converter-drab-gamma.vercel.app/",
         },
       ];
 
@@ -156,14 +177,28 @@
     <div class="p-4">
       <h2 class="text-2xl font-bold mb-3 text-blue-500">${project.title}</h2>
       <div class="iframe-container mb-4">
-        <iframe src="${project.link}" title="${project.title}" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+        <iframe 
+          src="${project.link}" 
+          title="${project.title}" 
+          sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads allow-top-navigation-by-user-activation">
+        </iframe>
       </div>
-      <a href="${project.link}" target="_blank" class="inline-block px-5 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:scale-105 transform transition">Open in New Tab</a>
+      <a href="${project.link}" target="_blank" class="inline-block px-5 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:scale-105 transform transition">
+        Open in New Tab
+      </a>
     </div>
   `;
       }
 
       document.addEventListener("DOMContentLoaded", renderProjectList);
+
+      // Sidebar toggle for mobile
+      const menuToggle = document.getElementById("menuToggle");
+      const sidebar = document.getElementById("sidebar");
+
+      menuToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("-translate-x-full");
+      });
     </script>
   </body>
 </html>
