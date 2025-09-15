@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .project-item:hover {
+        transform: translateX(4px) scale(1.02);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+      .iframe-container {
+        height: 80vh;
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(5px);
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-br from-gray-100 via-gray-50 to-gray-200 min-h-screen text-gray-800"
+  >
+    <!-- HEADER -->
+    <header
+      class="bg-white/70 backdrop-blur-lg border-b border-gray-200 sticky top-0 z-10 shadow"
+    >
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <h1
+          class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 via-teal-400 to-orange-400 bg-clip-text text-transparent"
+        >
+          My Project Portfolio
+        </h1>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex flex-col md:flex-row h-[calc(100vh-80px)]">
+      <!-- LEFT SIDEBAR -->
+      <aside
+        class="w-full md:w-1/3 lg:w-1/4 bg-white/50 backdrop-blur-lg border-r border-gray-200 overflow-y-auto"
+      >
+        <div class="p-6">
+          <h2 class="text-xl font-semibold mb-6 text-blue-500 tracking-wide">
+            Projects
+          </h2>
+          <div id="projectList" class="space-y-4"></div>
+        </div>
+      </aside>
+
+      <!-- RIGHT CONTENT -->
+      <main class="flex-1 overflow-y-auto p-8">
+        <div id="welcome" class="text-center">
+          <svg
+            class="w-28 h-28 mx-auto mb-6 text-blue-400 opacity-60"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+            ></path>
+          </svg>
+          <h2
+            class="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-500 via-teal-400 to-orange-400 bg-clip-text text-transparent"
+          >
+            Welcome to My Portfolio
+          </h2>
+          <p
+            class="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
+          >
+            Click on a project to view it live here. You can also open it in a
+            new tab.
+          </p>
+        </div>
+
+        <div id="projectContent" class="mt-6"></div>
+      </main>
+    </div>
+
+    <script>
+      const projects = [
+        {
+          id: 1,
+          title: "Landing Page",
+          description:
+            "A landing Page with a modern design showcasing thoughts about Nostalgia.",
+          technologies: ["HTML", "CSS"],
+          link: "https://shrenik620.github.io/Landing_Pg/",
+        },
+        {
+          id: 2,
+          title: "MegaBlog Project",
+          description:
+            "MegaBlogs is a modern, responsive blogging platform built with React, Appwrite, and TailwindCSS.",
+          technologies: ["React", "Appwrite", "TailwindCSS"],
+          link: "https://mega-blogs-sn-blogs-s-pace.vercel.app/",
+        },
+      ];
+
+      function renderProjectList() {
+        const projectList = document.getElementById("projectList");
+        projectList.innerHTML = "";
+
+        projects.forEach((project) => {
+          const projectItem = document.createElement("div");
+          projectItem.className =
+            "project-item cursor-pointer p-5 rounded-xl bg-white/40 border border-gray-200 hover:bg-white/50 transition-all";
+          projectItem.innerHTML = `
+      <h3 class="font-bold text-lg mb-2 text-gray-800">${project.title}</h3>
+      <p class="text-gray-600 text-sm mb-3">${project.description.substring(
+        0,
+        70
+      )}...</p>
+      <div class="flex flex-wrap gap-2">
+        ${project.technologies
+          .map(
+            (tech) =>
+              `<span class="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-lg">${tech}</span>`
+          )
+          .join("")}
+      </div>
+    `;
+          projectItem.onclick = () => showProject(project);
+          projectList.appendChild(projectItem);
+        });
+      }
+
+      function showProject(project) {
+        const content = document.getElementById("projectContent");
+        document.getElementById("welcome").style.display = "none";
+
+        content.innerHTML = `
+    <div class="p-4">
+      <h2 class="text-2xl font-bold mb-3 text-blue-500">${project.title}</h2>
+      <div class="iframe-container mb-4">
+        <iframe src="${project.link}" title="${project.title}" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+      </div>
+      <a href="${project.link}" target="_blank" class="inline-block px-5 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:scale-105 transform transition">Open in New Tab</a>
+    </div>
+  `;
+      }
+
+      document.addEventListener("DOMContentLoaded", renderProjectList);
+    </script>
+  </body>
+</html>
